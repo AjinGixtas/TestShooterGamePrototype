@@ -1,0 +1,72 @@
+[gd_scene load_steps=8 format=3 uid="uid://dpvdjv4wcq3ou"]
+
+[ext_resource type="Script" path="res://Scripts/Player/Weapons/Revolver.cs" id="1_utuiw"]
+[ext_resource type="PackedScene" uid="uid://ctued7x8eod7y" path="res://Scenes/Player/Weapons/AmmoType/RevolverBullet.tscn" id="2_bi40h"]
+[ext_resource type="Texture2D" uid="uid://bd8uyc38xw2q2" path="res://Sprites/Pistol.png" id="3_fslbp"]
+[ext_resource type="PackedScene" uid="uid://bhk4yw74c3hoi" path="res://Scenes/Player/Weapons/AmmoType/RevolverGrenade.tscn" id="3_gs1nv"]
+
+[sub_resource type="Animation" id="Animation_t4wg1"]
+resource_name = "NormalShoot"
+length = 0.2
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame_coords")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [Vector2i(1, 0), Vector2i(2, 0), Vector2i(3, 0), Vector2i(4, 0), Vector2i(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_b80lp"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame_coords")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Vector2i(0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_d2un2"]
+_data = {
+"NormalShoot": SubResource("Animation_t4wg1"),
+"RESET": SubResource("Animation_b80lp")
+}
+
+[node name="Revolver" type="Node2D" node_paths=PackedStringArray("BULLET_SPAWN_POINT", "ANIMATION_PLAYER")]
+script = ExtResource("1_utuiw")
+SPREAD_PER_SHOT = 5.0
+MAX_SPREAD_RECOVERY_SPEED = 20.0
+SPREAD_RECOVERY_SPEED = 20.0
+MIN_SPREAD = 5.0
+MAX_SPREAD = 30.0
+SPECIAL_CHARGE_THRESHOLD = 1.0
+MAX_AMMO = 6
+AMMO_PER_SHIELD = 3
+ROTATE_NORMAL_BULLET = true
+NORMAL_BULLET_SCENE = ExtResource("2_bi40h")
+SPECIAL_BULLET_SCENE = ExtResource("3_gs1nv")
+BULLET_SPAWN_POINT = NodePath("BulletSpawnPoint")
+ANIMATION_PLAYER = NodePath("AnimationPlayer")
+
+[node name="BulletSpawnPoint" type="Node2D" parent="."]
+position = Vector2(8, -2)
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("3_fslbp")
+hframes = 6
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_d2un2")
+}

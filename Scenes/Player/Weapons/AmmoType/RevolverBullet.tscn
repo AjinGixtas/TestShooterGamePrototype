@@ -1,0 +1,121 @@
+[gd_scene load_steps=9 format=3 uid="uid://ctued7x8eod7y"]
+
+[ext_resource type="Script" path="res://Scripts/Player/Weapons/AmmoType/Bullet.cs" id="1_fpy7e"]
+[ext_resource type="Texture2D" uid="uid://kq7rcskoh5" path="res://Sprites/Bullet.png" id="2_6sa4f"]
+[ext_resource type="PackedScene" uid="uid://ciyufo7mjaslh" path="res://Scenes/Components/Hitbox.tscn" id="3_8j4sa"]
+
+[sub_resource type="Animation" id="Animation_ypo4r"]
+resource_name = "Collide"
+length = 0.25
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame_coords")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [Vector2i(5, 0), Vector2i(6, 0), Vector2i(7, 0), Vector2i(8, 0), Vector2i(9, 0)]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.25),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"queue_free"
+}]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:speed")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_r7p54"]
+resource_name = "Move"
+length = 0.25
+loop_mode = 1
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame_coords")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [Vector2i(0, 0), Vector2i(1, 0), Vector2i(2, 0), Vector2i(3, 0), Vector2i(4, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_rfo73"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame_coords")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Vector2i(0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_22g1o"]
+_data = {
+"Collide": SubResource("Animation_ypo4r"),
+"Move": SubResource("Animation_r7p54"),
+"RESET": SubResource("Animation_rfo73")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8m27q"]
+size = Vector2(19, 10)
+
+[node name="RevolverBullet" type="Node2D" node_paths=PackedStringArray("animationPlayer")]
+script = ExtResource("1_fpy7e")
+SPEED = 512.0
+animationPlayer = NodePath("AnimationPlayer")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_6sa4f")
+hframes = 10
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_22g1o")
+}
+autoplay = "Move"
+
+[node name="BulletLifetimeTimer" type="Timer" parent="."]
+wait_time = 0.6
+one_shot = true
+autostart = true
+
+[node name="Hitbox" parent="." instance=ExtResource("3_8j4sa")]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+position = Vector2(0.5, 0)
+shape = SubResource("RectangleShape2D_8m27q")
+
+[connection signal="timeout" from="BulletLifetimeTimer" to="." method="PlaySelfDestructAnimation"]

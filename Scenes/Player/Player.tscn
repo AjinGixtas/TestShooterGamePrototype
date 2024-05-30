@@ -1,0 +1,187 @@
+[gd_scene load_steps=21 format=3 uid="uid://bo0fav4rjlc1r"]
+
+[ext_resource type="Texture2D" uid="uid://df3bsfyhbfai5" path="res://Sprites/Character.png" id="1_klyp5"]
+[ext_resource type="Script" path="res://Scripts/Player/Player.cs" id="1_utccb"]
+[ext_resource type="PackedScene" uid="uid://b8a7dkytdrvce" path="res://Scenes/Components/Hurtbox.tscn" id="2_qq7ek"]
+[ext_resource type="Texture2D" uid="uid://can2u2id2vm2m" path="res://Sprites/HealthBarBone.png" id="4_7e70t"]
+[ext_resource type="Texture2D" uid="uid://dqm0kffmgd7ml" path="res://Sprites/ShieldBarBone.png" id="5_x5vu8"]
+[ext_resource type="Script" path="res://Scripts/Player/Weapons/WeaponManager.cs" id="6_poue6"]
+[ext_resource type="PackedScene" uid="uid://dpvdjv4wcq3ou" path="res://Scenes/Player/Weapons/Revolver.tscn" id="7_s1j3i"]
+[ext_resource type="PackedScene" uid="uid://dxktoyrjic76u" path="res://Scenes/Player/Weapons/Sword.tscn" id="7_uaxbm"]
+[ext_resource type="PackedScene" uid="uid://cfhb1xm64eeot" path="res://Scenes/Player/Weapons/Shotgun.tscn" id="9_ajrpv"]
+[ext_resource type="PackedScene" uid="uid://bhjkuaw03314h" path="res://Scenes/Player/Weapons/Rifle.tscn" id="10_mkgyh"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fmxfh"]
+size = Vector2(14, 46)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6yw2v"]
+size = Vector2(12, 44)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ado4h"]
+bg_color = Color(0.259294, 0.259294, 0.259294, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_c47cw"]
+bg_color = Color(6.257e-07, 0.546174, 0.181649, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rrgnv"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lwstt"]
+bg_color = Color(0, 0.388235, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rnji2"]
+bg_color = Color(0.151276, 0.151276, 0.151276, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0i0c1"]
+bg_color = Color(0.186909, 0.319554, 0.319756, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_x1435"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vtljs"]
+bg_color = Color(0, 0.65098, 0.882353, 1)
+
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("DASH_DURATION_TIMER", "DASH_COOLDOWN_TIMER")]
+script = ExtResource("1_utccb")
+NORMAL_SPEED = 128.0
+DASH_SPEED_MULT = 2.5
+SLOW_SPEED_MULT = 0.2
+DASH_DURATION_TIMER = NodePath("TimerContainer/DashDurationTimer")
+DASH_COOLDOWN_TIMER = NodePath("TimerContainer/DashCooldownTimer")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(3, 3)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_fmxfh")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_klyp5")
+
+[node name="Hurtbox" parent="." node_paths=PackedStringArray("HEALTH_BAR", "SHIELD_BAR", "SHIELD_DELAY_BAR", "SHIELD_REGEN_BAR") instance=ExtResource("2_qq7ek")]
+collision_mask = 0
+MAX_HEALTH = 5.0
+MAX_SHIELD = 3.0
+HEALTH_BAR = NodePath("../HUD_Canvas/HealthBarSprite/HealthBar")
+SHIELD_BAR = NodePath("../HUD_Canvas/ShieldBarSprite/ShieldBar")
+SHIELD_DELAY_BAR = NodePath("../HUD_Canvas/ShieldBarSprite/ShieldDelayBar")
+SHIELD_REGEN_BAR = NodePath("../HUD_Canvas/ShieldBarSprite/ShieldRegenBar")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
+shape = SubResource("RectangleShape2D_6yw2v")
+
+[node name="HUD_Canvas" type="CanvasLayer" parent="."]
+
+[node name="HealthBarSprite" type="NinePatchRect" parent="HUD_Canvas"]
+offset_left = 96.0
+offset_top = 32.0
+offset_right = 356.0
+offset_bottom = 92.0
+texture = ExtResource("4_7e70t")
+patch_margin_left = 10
+patch_margin_top = 10
+patch_margin_right = 10
+patch_margin_bottom = 10
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
+
+[node name="HealthBar" type="ProgressBar" parent="HUD_Canvas/HealthBarSprite"]
+z_index = -1
+layout_mode = 0
+offset_right = 260.0
+offset_bottom = 60.0
+theme_override_styles/background = SubResource("StyleBoxFlat_ado4h")
+theme_override_styles/fill = SubResource("StyleBoxFlat_c47cw")
+max_value = 5.0
+step = 1.0
+value = 5.0
+show_percentage = false
+
+[node name="ShieldBarSprite" type="NinePatchRect" parent="HUD_Canvas"]
+offset_left = 96.0
+offset_top = 82.0
+offset_right = 232.0
+offset_bottom = 134.0
+texture = ExtResource("5_x5vu8")
+patch_margin_left = 10
+patch_margin_top = 10
+patch_margin_right = 10
+patch_margin_bottom = 10
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
+
+[node name="ShieldBar" type="ProgressBar" parent="HUD_Canvas/ShieldBarSprite"]
+z_index = -1
+layout_mode = 0
+offset_right = 136.0
+offset_bottom = 52.0
+theme_override_styles/background = SubResource("StyleBoxFlat_rrgnv")
+theme_override_styles/fill = SubResource("StyleBoxFlat_lwstt")
+max_value = 3.0
+step = 1.0
+value = 3.0
+show_percentage = false
+
+[node name="ShieldDelayBar" type="ProgressBar" parent="HUD_Canvas/ShieldBarSprite"]
+z_index = -3
+layout_mode = 0
+offset_top = 52.0
+offset_right = 52.0
+offset_bottom = 188.0
+rotation = -1.5708
+theme_override_styles/background = SubResource("StyleBoxFlat_rnji2")
+theme_override_styles/fill = SubResource("StyleBoxFlat_0i0c1")
+max_value = 3.0
+step = 0.001
+value = 3.0
+show_percentage = false
+
+[node name="ShieldRegenBar" type="ProgressBar" parent="HUD_Canvas/ShieldBarSprite"]
+z_index = -2
+layout_mode = 0
+offset_right = 136.0
+offset_bottom = 52.0
+theme_override_styles/background = SubResource("StyleBoxFlat_x1435")
+theme_override_styles/fill = SubResource("StyleBoxFlat_vtljs")
+max_value = 3.0
+step = 0.001
+show_percentage = false
+
+[node name="TimerContainer" type="Node" parent="."]
+
+[node name="DashDurationTimer" type="Timer" parent="TimerContainer"]
+wait_time = 0.2
+
+[node name="DashCooldownTimer" type="Timer" parent="TimerContainer"]
+wait_time = 0.8
+
+[node name="WeaponManager" type="Node2D" parent="." node_paths=PackedStringArray("sword", "weapons")]
+script = ExtResource("6_poue6")
+sword = NodePath("Sword")
+weapons = [NodePath("Revolver"), NodePath("Shotgun"), NodePath("Rifle")]
+
+[node name="Sword" parent="WeaponManager" node_paths=PackedStringArray("WEAPON_MANAGER", "PLAYER") instance=ExtResource("7_uaxbm")]
+position = Vector2(16, 0)
+rotation = 2.35619
+WEAPON_MANAGER = NodePath("..")
+PLAYER = NodePath("../..")
+
+[node name="Revolver" parent="WeaponManager" node_paths=PackedStringArray("PLAYER_HURTBOX", "PLAYER") instance=ExtResource("7_s1j3i")]
+position = Vector2(16, 0)
+PLAYER_HURTBOX = NodePath("../../Hurtbox")
+PLAYER = NodePath("../..")
+
+[node name="Shotgun" parent="WeaponManager" node_paths=PackedStringArray("PLAYER_HURTBOX", "PLAYER") instance=ExtResource("9_ajrpv")]
+visible = false
+position = Vector2(17, -3)
+PLAYER_HURTBOX = NodePath("../../Hurtbox")
+PLAYER = NodePath("../..")
+
+[node name="Rifle" parent="WeaponManager" node_paths=PackedStringArray("PLAYER_HURTBOX", "PLAYER") instance=ExtResource("10_mkgyh")]
+visible = false
+position = Vector2(15, 0)
+PLAYER_HURTBOX = NodePath("../../Hurtbox")
+PLAYER = NodePath("../..")
+
+[connection signal="timeout" from="TimerContainer/DashDurationTimer" to="." method="OnDashDurationTimerTimeout"]
+[connection signal="timeout" from="TimerContainer/DashCooldownTimer" to="." method="OnDashCooldownTimerTimeout"]

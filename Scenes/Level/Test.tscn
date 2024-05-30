@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://8w1xm7fnjft"]
+
+[ext_resource type="PackedScene" uid="uid://bgvi0ncry4pp1" path="res://Scenes/Enemies/Grunt.tscn" id="1_2v0he"]
+[ext_resource type="PackedScene" uid="uid://bo0fav4rjlc1r" path="res://Scenes/Player/Player.tscn" id="2_xx2gv"]
+
+[node name="Test" type="Node2D"]
+
+[node name="Grunt" parent="." instance=ExtResource("1_2v0he")]
+
+[node name="Grunt2" parent="." instance=ExtResource("1_2v0he")]
+position = Vector2(183, 0)
+
+[node name="Grunt3" parent="." instance=ExtResource("1_2v0he")]
+position = Vector2(84, -7)
+
+[node name="Player" parent="." node_paths=PackedStringArray("BULLET_CONTAINER") instance=ExtResource("2_xx2gv")]
+position = Vector2(-65, -7)
+BULLET_CONTAINER = NodePath("..")

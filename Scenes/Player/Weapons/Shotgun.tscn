@@ -1,0 +1,68 @@
+[gd_scene load_steps=7 format=3 uid="uid://cfhb1xm64eeot"]
+
+[ext_resource type="Script" path="res://Scripts/Player/Weapons/Shotgun.cs" id="1_1cv7i"]
+[ext_resource type="PackedScene" uid="uid://b5lffkxqv7j7r" path="res://Scenes/Player/Weapons/AmmoType/ShotgunPellet.tscn" id="2_kaw84"]
+[ext_resource type="Texture2D" uid="uid://cr4531kdekr3b" path="res://Sprites/Shotgun.png" id="3_pl64k"]
+
+[sub_resource type="Animation" id="Animation_xnpgm"]
+resource_name = "NormalShoot"
+length = 0.25
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame_coords")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [Vector2i(1, 0), Vector2i(2, 0), Vector2i(3, 0), Vector2i(4, 0), Vector2i(5, 0), Vector2i(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_kdkhe"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame_coords")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Vector2i(0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ks0cf"]
+_data = {
+"NormalShoot": SubResource("Animation_xnpgm"),
+"RESET": SubResource("Animation_kdkhe")
+}
+
+[node name="Shotgun" type="Node2D" node_paths=PackedStringArray("BULLET_SPAWN_POINT", "ANIMATION_PLAYER")]
+script = ExtResource("1_1cv7i")
+PELLET_PER_SHOT = 8
+MIN_SPREAD = 45.0
+MAX_SPREAD = 45.0
+SPECIAL_CHARGE_THRESHOLD = 0.6
+MAX_AMMO = 2
+AMMO_PER_SHIELD = 2
+NORMAL_BULLET_SCENE = ExtResource("2_kaw84")
+SPECIAL_BULLET_SCENE = ExtResource("2_kaw84")
+BULLET_SPAWN_POINT = NodePath("BulletSpawnPoint")
+ANIMATION_PLAYER = NodePath("AnimationPlayer")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("3_pl64k")
+hframes = 6
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_ks0cf")
+}
+
+[node name="BulletSpawnPoint" type="Node2D" parent="."]
+position = Vector2(14, -2)
