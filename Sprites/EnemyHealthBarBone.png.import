@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dqm0kffmgd7ml"
-path="res://.godot/imported/ShieldBarBone.png-cead86dcf1e3a486a9a8022af1fd0447.ctex"
+uid="uid://dyitvqdk3xxk1"
+path="res://.godot/imported/EnemyHealthBarBone.png-7604680d4e77d5c0378975c7b72a538f.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprites/ShieldBarBone.png"
-dest_files=["res://.godot/imported/ShieldBarBone.png-cead86dcf1e3a486a9a8022af1fd0447.ctex"]
+source_file="res://Sprites/EnemyHealthBarBone.png"
+dest_files=["res://.godot/imported/EnemyHealthBarBone.png-7604680d4e77d5c0378975c7b72a538f.ctex"]
 
 [params]
 

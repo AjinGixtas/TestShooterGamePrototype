@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://can2u2id2vm2m"
-path="res://.godot/imported/HealthBarBone.png-02a74dbcdd4e37650c1d19dff2f63d15.ctex"
+uid="uid://dqm0kffmgd7ml"
+path="res://.godot/imported/PlayerShieldBarBone.png-4324a7fa5f0072c2fba7c913d2b9075f.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprites/HealthBarBone.png"
-dest_files=["res://.godot/imported/HealthBarBone.png-02a74dbcdd4e37650c1d19dff2f63d15.ctex"]
+source_file="res://Sprites/PlayerShieldBarBone.png"
+dest_files=["res://.godot/imported/PlayerShieldBarBone.png-4324a7fa5f0072c2fba7c913d2b9075f.ctex"]
 
 [params]
 

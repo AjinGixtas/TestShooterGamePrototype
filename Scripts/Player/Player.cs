@@ -16,6 +16,7 @@ public partial class Player : CharacterBody2D {
     {
         DASH_SPEED = NORMAL_SPEED * DASH_SPEED_MULT; SLOW_SPEED = NORMAL_SPEED * SLOW_SPEED_MULT;
         SLOW_DASH_SPEED = NORMAL_SPEED * SLOW_SPEED_MULT * DASH_SPEED_MULT;
+        Enemy.PLAYER = this;
     }
     public override void _Process(double delta) {
         c_direction = Input.GetVector("ui_moveLeft", "ui_moveRight", "ui_moveUp", "ui_moveDown").Normalized();

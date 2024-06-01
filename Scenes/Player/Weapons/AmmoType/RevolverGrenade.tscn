@@ -226,12 +226,16 @@ one_shot = true
 autostart = true
 
 [node name="GrenadeHitbox" parent="." instance=ExtResource("1_gohir")]
+collision_layer = 0
+collision_mask = 2
 damage = 1.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="GrenadeHitbox"]
 shape = SubResource("CircleShape2D_b31ct")
 
 [node name="ExplosionHitbox" parent="." instance=ExtResource("1_gohir")]
+collision_layer = 0
+collision_mask = 2
 damage = 1.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ExplosionHitbox"]
@@ -239,3 +243,4 @@ shape = SubResource("RectangleShape2D_24icv")
 disabled = true
 
 [connection signal="timeout" from="BulletLifetimeTimer" to="." method="PlaySelfDestructAnimation"]
+[connection signal="area_entered" from="GrenadeHitbox" to="." method="OnAreaEntered"]
