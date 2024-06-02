@@ -27,20 +27,24 @@ public partial class Rifle : Weapon
 		if (currentAmmo < 2) return;
 		base.SpecialShoot();
 		ANIMATION_PLAYER.Play("NormalShoot");
-		int i = 0;
+		int i = 0; currentAmmo -= 2;
 		RAY_CAST.GlobalRotation = GlobalRotation;
 		while (i < SPECIAL_SHOT_TARGET - 1 && RAY_CAST.IsColliding())
 		{
 			collidedHurtboxs.Add(RAY_CAST.GetCollider() as Hurtbox);
 			TRACER.Size = new((RAY_CAST.Position - RAY_CAST.GetCollisionPoint()).Length(), 1);
-			collidedHurtboxs.Last().TakingDamage(SPECIAL_SHOT_DAMAGE);
 			RAY_CAST.AddException(collidedHurtboxs.Last());
+			collidedHurtboxs.Last().TakingDamage(SPECIAL_SHOT_DAMAGE);
 			RAY_CAST.ForceRaycastUpdate();
 			++i;
 		}
 		foreach (Hurtbox collidedHurtbox in collidedHurtboxs)
 		{
+			try{
 			RAY_CAST.RemoveException(collidedHurtbox);
+			} catch (ObjectDisposedException) {
+				continue;
+			}
 		}
 	}
 }

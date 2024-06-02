@@ -1,13 +1,25 @@
-[gd_scene load_steps=3 format=3 uid="uid://8w1xm7fnjft"]
+[gd_scene load_steps=4 format=3 uid="uid://8w1xm7fnjft"]
 
 [ext_resource type="PackedScene" uid="uid://bgvi0ncry4pp1" path="res://Scenes/Enemies/RobotDuelist.tscn" id="1_2v0he"]
 [ext_resource type="PackedScene" uid="uid://bo0fav4rjlc1r" path="res://Scenes/Player/Player.tscn" id="2_xx2gv"]
+[ext_resource type="PackedScene" uid="uid://cui6tctjnqxhf" path="res://Scenes/Enemies/FragmentedCrystal.tscn" id="3_fn8v6"]
 
 [node name="Test" type="Node2D"]
-
-[node name="Grunt" parent="." instance=ExtResource("1_2v0he")]
-currentSpeed = 20.0
 
 [node name="Player" parent="." node_paths=PackedStringArray("BULLET_CONTAINER") instance=ExtResource("2_xx2gv")]
 position = Vector2(0, -48)
 BULLET_CONTAINER = NodePath("..")
+
+[node name="RobotDuelist" parent="." instance=ExtResource("1_2v0he")]
+position = Vector2(-2, -153)
+
+[node name="RobotDuelist2" parent="." instance=ExtResource("1_2v0he")]
+position = Vector2(135, -48)
+
+[node name="RobotDuelist3" parent="." instance=ExtResource("1_2v0he")]
+position = Vector2(-139, -69)
+
+[node name="RobotDuelist4" parent="." instance=ExtResource("1_2v0he")]
+
+[node name="FragmentedCrystal" parent="." instance=ExtResource("3_fn8v6")]
+position = Vector2(127, -117)

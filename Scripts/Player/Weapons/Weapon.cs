@@ -3,14 +3,14 @@ using Godot;
 public partial class Weapon : Node2D
 {
     [Export] protected float SPREAD_PER_SHOT, MAX_SPREAD_RECOVERY_SPEED, SPREAD_RECOVERY_SPEED, MIN_SPREAD, MAX_SPREAD, SPECIAL_CHARGE_THRESHOLD;
-    [Export] protected int MAX_AMMO, AMMO_PER_SHIELD;
+    [Export] public int MAX_AMMO; [Export] protected int AMMO_PER_SHIELD;
     [Export] protected bool ROTATE_NORMAL_BULLET, ROTATE_SPECIAL_BULLET;
     protected float CURRENT_SPREAD { 
         get { return currentSpread; }
         set { currentSpread = Mathf.Min(Mathf.Max(MIN_SPREAD, value), MAX_SPREAD); }
     }
     protected float currentSpread, currentSpreadRecoverySpeed, currentCharge;
-    protected int currentAmmo;
+    public int currentAmmo;
     protected Bullet c_instance;
     protected float c_rotation, deltaF;
     protected int c_requiredShield;

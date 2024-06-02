@@ -98,7 +98,7 @@ libraries = {
 texture = ExtResource("2_sq4n0")
 
 [node name="AttackCooldownTimer" type="Timer" parent="."]
-wait_time = 0.75
+wait_time = 0.66
 one_shot = true
 
 [node name="Hitbox" parent="." instance=ExtResource("3_7xrlw")]
