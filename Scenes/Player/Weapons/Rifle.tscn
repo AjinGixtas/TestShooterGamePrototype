@@ -81,7 +81,7 @@ MAX_SPREAD = 12.0
 SPECIAL_CHARGE_THRESHOLD = 1.25
 MAX_AMMO = 4
 AMMO_PER_SHIELD = 2.0
-AMMO_PER_TARGET_SLASH = 0.75
+AMMO_PER_TARGET_SLASH = 1.0
 ANIMATION_PLAYER = NodePath("AnimationPlayer")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
