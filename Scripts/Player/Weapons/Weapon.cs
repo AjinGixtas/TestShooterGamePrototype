@@ -3,14 +3,14 @@ using Godot;
 public partial class Weapon : Node2D
 {
     [Export] protected float SPREAD_PER_SHOT, MAX_SPREAD_RECOVERY_SPEED, SPREAD_RECOVERY_SPEED, MIN_SPREAD, MAX_SPREAD, SPECIAL_CHARGE_THRESHOLD;
-    [Export] public int MAX_AMMO; [Export] protected int AMMO_PER_SHIELD;
+    [Export] public int MAX_AMMO; [Export] protected float AMMO_PER_SHIELD, AMMO_PER_TARGET_SLASH;
     [Export] protected bool ROTATE_NORMAL_BULLET, ROTATE_SPECIAL_BULLET;
     protected float CURRENT_SPREAD { 
         get { return currentSpread; }
         set { currentSpread = Mathf.Min(Mathf.Max(MIN_SPREAD, value), MAX_SPREAD); }
     }
     protected float currentSpread, currentSpreadRecoverySpeed, currentCharge;
-    public int currentAmmo;
+    public float currentAmmo;
     protected Bullet c_instance;
     protected float c_rotation, deltaF;
     protected int c_requiredShield;
@@ -50,8 +50,13 @@ public partial class Weapon : Node2D
     public virtual void SpecialShoot() { PLAYER.slowDuration += 0.4f; currentCharge = 0; }
     public virtual void Reload()
     {
-        c_requiredShield = Mathf.CeilToInt((MAX_AMMO - currentAmmo) / (float)AMMO_PER_SHIELD);
+        c_requiredShield = Mathf.CeilToInt((MAX_AMMO - currentAmmo) / AMMO_PER_SHIELD);
+        GD.Print(MAX_AMMO, ' ', currentAmmo, ' ', AMMO_PER_SHIELD);
         currentAmmo += Mathf.Min(Mathf.FloorToInt(PLAYER_HURTBOX.CURRENT_SHIELD), c_requiredShield) * AMMO_PER_SHIELD;
         PLAYER_HURTBOX.CURRENT_SHIELD = Mathf.Max(0, PLAYER_HURTBOX.CURRENT_SHIELD - c_requiredShield);
+        GD.Print(c_requiredShield, ' ', currentAmmo, ' ', PLAYER_HURTBOX.CURRENT_SHIELD);
+    }
+    public virtual void RecoverAmmoThroughSlash(int amountOfTargetHit) {
+        currentAmmo = Mathf.Min(MAX_AMMO, currentAmmo + AMMO_PER_TARGET_SLASH * amountOfTargetHit);
     }
 }

@@ -41,10 +41,16 @@ public partial class WeaponManager : Node2D
             BULLET_INDICATOR.ChangeBulletBarType(weapons[currentActiveWeaponIndex].MAX_AMMO, weapons[currentActiveWeaponIndex].currentAmmo);
         }
         else if (Input.IsActionPressed("ui_shoot")) weapons[CURRENT_ACTIVE_WEAPON_INDEX].Charge(deltaF);
-        else if (Input.IsActionJustPressed("ui_reload"))
+        if (Input.IsActionJustPressed("ui_reload"))
         {
+            GD.Print("RELOAD!");
             weapons[CURRENT_ACTIVE_WEAPON_INDEX].Reload();
             BULLET_INDICATOR.ChangeBulletBarType(weapons[currentActiveWeaponIndex].MAX_AMMO, weapons[currentActiveWeaponIndex].currentAmmo);
         }
+    }
+    public void RecoverAmmoThroughSlash(int amountOfTargetHit)
+    {
+        weapons[currentActiveWeaponIndex].RecoverAmmoThroughSlash(amountOfTargetHit);
+        BULLET_INDICATOR.ChangeBulletBarType(weapons[currentActiveWeaponIndex].MAX_AMMO, weapons[currentActiveWeaponIndex].currentAmmo);
     }
 }

@@ -413,7 +413,7 @@ shape = SubResource("RectangleShape2D_ttprl")
 [node name="EnemyHealthBar" parent="." instance=ExtResource("6_r46u2")]
 
 [node name="SlashCooldownTimer" type="Timer" parent="."]
-wait_time = 3.0
+wait_time = 2.0
 one_shot = true
 
 [connection signal="Dead" from="Hurtbox" to="." method="Death"]
