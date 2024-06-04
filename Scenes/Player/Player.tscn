@@ -36,11 +36,13 @@ DASH_DURATION_TIMER = NodePath("TimerContainer/DashDurationTimer")
 DASH_COOLDOWN_TIMER = NodePath("TimerContainer/DashCooldownTimer")
 HURTBOX = NodePath("Hurtbox")
 
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_fmxfh")
+
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(3, 3)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("RectangleShape2D_fmxfh")
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("1_klyp5")
@@ -93,9 +95,13 @@ sword = NodePath("Sword")
 weapons = [NodePath("Revolver"), NodePath("Shotgun"), NodePath("Rifle")]
 BULLET_INDICATOR = NodePath("../HUD_Canvas/BulletIndicator")
 
-[node name="Sword" parent="WeaponManager" node_paths=PackedStringArray("WEAPON_MANAGER", "PLAYER") instance=ExtResource("7_uaxbm")]
+[node name="Sword" parent="WeaponManager" node_paths=PackedStringArray("PLAYER_ANIMATION_PLAYER", "WEAPON_MANAGER", "PLAYER") instance=ExtResource("7_uaxbm")]
 position = Vector2(16, 0)
 rotation = 2.35619
+NORMAL_SLASH_DAMAGE = 1.0
+SPECIAL_SLASH_DAMAGE = 5.0
+SLASH_CHARGE_THRESHOLD = 0.6
+PLAYER_ANIMATION_PLAYER = NodePath("../../AnimationPlayer")
 WEAPON_MANAGER = NodePath("..")
 PLAYER = NodePath("../..")
 
